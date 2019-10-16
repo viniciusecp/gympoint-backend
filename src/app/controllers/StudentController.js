@@ -16,6 +16,9 @@ class StudentController {
       height: Yup.number()
         .required()
         .positive(),
+      weight: Yup.number()
+        .required()
+        .positive(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -32,12 +35,12 @@ class StudentController {
 
     const { userId: user_id } = req;
 
-    const { id, name, email, age, height } = await Student.create({
+    const { id, name, email, age, height, weight } = await Student.create({
       ...req.body,
       user_id,
     });
 
-    return res.json({ id, name, email, age, height, user_id });
+    return res.json({ id, name, email, age, height, weight, user_id });
   }
 
   async update(req, res) {
@@ -51,6 +54,9 @@ class StudentController {
         .integer()
         .positive(),
       height: Yup.number()
+        .required()
+        .positive(),
+      weight: Yup.number()
         .required()
         .positive(),
     });
@@ -72,7 +78,9 @@ class StudentController {
       }
     }
 
-    const { name, age, height, user_id } = await student.update(req.body);
+    const { name, age, height, weight, user_id } = await student.update(
+      req.body
+    );
 
     return res.json({
       id,
@@ -80,6 +88,7 @@ class StudentController {
       email,
       age,
       height,
+      weight,
       user_id,
     });
   }
