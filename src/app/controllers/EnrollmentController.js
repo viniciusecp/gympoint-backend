@@ -8,6 +8,8 @@ import User from '../models/User';
 
 class EnrollmentController {
   async index(req, res) {
+    const { page = 1 } = req.query;
+
     const enrollments = await Enrollment.findAll({
       attributes: [
         'id',
@@ -16,6 +18,7 @@ class EnrollmentController {
         'price',
         'student_id',
         'plan_id',
+        'canceled_at',
       ],
       include: [
         {
@@ -36,6 +39,8 @@ class EnrollmentController {
           attributes: ['title', 'duration', 'price'],
         },
       ],
+      limit: 20,
+      offset: (page - 1) * 20,
     });
 
     return res.json(enrollments);

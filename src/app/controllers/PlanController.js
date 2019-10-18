@@ -4,6 +4,17 @@ import Plan from '../models/Plan';
 import Enrollment from '../models/Enrollment';
 
 class PlanController {
+  async index(req, res) {
+    const { page = 1 } = req.query;
+
+    const plans = await Plan.findAll({
+      limit: 20,
+      offset: (page - 1) * 20,
+    });
+
+    return res.json(plans);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       title: Yup.string().required(),
@@ -31,12 +42,6 @@ class PlanController {
     const { id, title, duration, price } = await Plan.create(req.body);
 
     return res.json({ id, title, duration, price });
-  }
-
-  async index(req, res) {
-    const plans = await Plan.findAll();
-
-    return res.json(plans);
   }
 
   async update(req, res) {
