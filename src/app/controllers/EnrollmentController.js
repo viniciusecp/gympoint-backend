@@ -88,7 +88,7 @@ class EnrollmentController {
      * Check if student already has an enrollment
      */
     const studentEnrollment = await Enrollment.findOne({
-      where: { student_id },
+      where: { student_id, canceled_at: null },
     });
 
     if (studentEnrollment) {
@@ -102,7 +102,7 @@ class EnrollmentController {
 
     const price = plan.duration * plan.price;
 
-    const { id, end_date } = await Enrollment.create({
+    const { id } = await Enrollment.create({
       ...req.body,
       end_date: endDate,
       price,
@@ -112,7 +112,118 @@ class EnrollmentController {
      * ENVIAR EMAIL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
      */
 
-    return res.json({ id, student_id, plan_id, start_date, end_date, price });
+    return res.json({
+      id,
+      student_id,
+      plan_id,
+      start_date,
+      end_date: endDate,
+      price,
+    });
+  }
+
+  async update(req, res) {
+    const schema = Yup.object().shape({
+      student_id: Yup.number()
+        .integer()
+        .positive()
+        .required(),
+      plan_id: Yup.number()
+        .integer()
+        .positive()
+        .required(),
+      start_date: Yup.date().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
+    /**
+     * Check if enrollment, student and plan exists
+     */
+    const { id } = req.params;
+    const { student_id, plan_id, start_date } = req.body;
+
+    const enrollment = await Enrollment.findByPk(id);
+
+    if (!enrollment) {
+      return res.status(400).json({ error: 'Enrollment does not exists' });
+    }
+
+    const studentExists = await Student.findByPk(student_id);
+
+    if (!studentExists) {
+      return res.status(400).json({ error: 'Student does not exists' });
+    }
+
+    const plan = await Plan.findByPk(plan_id);
+
+    if (!plan) {
+      return res.status(400).json({ error: 'Plan does not exists' });
+    }
+
+    /**
+     * Check for past dates
+     */
+    const parsedStartDate = startOfDay(parseISO(start_date));
+
+    if (isBefore(parsedStartDate, startOfDay(new Date()))) {
+      return res.status(400).json({ error: 'Past dates are not permitted' });
+    }
+
+    /**
+     * Check if student already has an enrollment
+     */
+    const studentEnrollment = await Enrollment.findOne({
+      where: { student_id },
+    });
+
+    if (studentEnrollment && studentEnrollment.id !== Number(id)) {
+      return res.status(400).json({ error: 'Student is already enrolled' });
+    }
+
+    /**
+     * Calculate end date and price
+     */
+    const endDate = addMonths(parsedStartDate, plan.duration);
+
+    const price = plan.duration * plan.price;
+
+    await enrollment.update({
+      ...req.body,
+      end_date: endDate,
+      price,
+    });
+
+    return res.json({
+      id,
+      student_id,
+      plan_id,
+      start_date,
+      end_date: endDate,
+      price,
+    });
+  }
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    const enrollment = await Enrollment.findByPk(id);
+
+    if (!enrollment) {
+      return res.status(400).json({ error: 'Enrolled does not exists' });
+    }
+
+    if (enrollment.canceled_at) {
+      return res.status(400).json({ error: 'Enrolled is already canceled' });
+    }
+
+    enrollment.canceled_at = new Date();
+
+    await enrollment.save();
+
+    return res.json(enrollment);
   }
 }
 

@@ -85,10 +85,6 @@ class PlanController {
       return res.status(400).json({ error: 'Plan does not exists' });
     }
 
-    /**
-     * VERIFICAR SE TEM ALGUM ALUNO CADASTRADO NESSE PLANO E IMPEDIR DELETAR O PLANO CASO TENHA
-     * PODENDO BUSCAR OS ALUNOS ASSOCIADOS A ESTE PLANO NA BUSCA DE CIMA E VER SE VEM ALGUM
-     */
     const enrollmentInPlan = await Enrollment.findOne({
       where: { plan_id: id },
     });
