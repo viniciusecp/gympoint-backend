@@ -1,5 +1,7 @@
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
+import CurrencyFormatter from 'currency-formatter';
+
 import Mail from '../../lib/Mail';
 
 class EnrollmentMail {
@@ -12,26 +14,18 @@ class EnrollmentMail {
 
     await Mail.sendMail({
       to: `${student.name} <${student.email}>`,
-      subject: 'Matricula realizada',
+      subject: 'Matrícula realizada',
       template: 'enrollment',
       context: {
         name: student.name,
-        start_date: format(
-          parseISO(start_date),
-          "'dia' dd 'de' MMMM', às' H:mm'h'",
-          {
-            locale: pt,
-          }
-        ),
-        end_date: format(
-          parseISO(end_date),
-          "'dia' dd 'de' MMMM', às' H:mm'h'",
-          {
-            locale: pt,
-          }
-        ),
+        start_date: format(parseISO(start_date), "dd 'de' MMMM 'de' yyyy", {
+          locale: pt,
+        }),
+        end_date: format(parseISO(end_date), "dd 'de' MMMM 'de' yyyy", {
+          locale: pt,
+        }),
         plan: plan.title,
-        price,
+        price: CurrencyFormatter.format(price, { locale: 'pt-BR' }),
       },
     });
   }

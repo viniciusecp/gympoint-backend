@@ -118,7 +118,7 @@ class EnrollmentController {
 
     await Queue.add(EnrollmentMail.key, {
       student,
-      start_date,
+      start_date: parsedStartDate,
       end_date: endDate,
       plan,
       price,

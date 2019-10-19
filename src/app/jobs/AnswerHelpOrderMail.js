@@ -8,7 +8,7 @@ class AnswerHelpOrderMail {
   }
 
   async handle({ data }) {
-    const { helpOrder, question, answer, answer_at } = data;
+    const { helpOrder, answer, answer_at } = data;
 
     await Mail.sendMail({
       to: `${helpOrder.student.name} <${helpOrder.student.email}>`,
@@ -16,11 +16,11 @@ class AnswerHelpOrderMail {
       template: 'answerHelpOrder',
       context: {
         name: helpOrder.student.name,
-        question,
+        question: helpOrder.question,
         answer,
         answer_at: format(
           parseISO(answer_at),
-          "'dia' dd 'de' MMMM', às' H:mm'h'",
+          "'dia' dd 'de' MMMM 'de' yyyy', às' H:mm'h'",
           {
             locale: pt,
           }

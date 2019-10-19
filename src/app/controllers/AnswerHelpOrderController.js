@@ -45,7 +45,6 @@ class AnswerHelpOrders {
 
     await Queue.add(AnswerHelpOrderMail.key, {
       helpOrder,
-      question,
       answer,
       answer_at,
     });
