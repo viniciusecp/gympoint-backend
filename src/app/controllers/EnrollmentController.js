@@ -6,6 +6,9 @@ import Plan from '../models/Plan';
 import Enrollment from '../models/Enrollment';
 import User from '../models/User';
 
+import EnrollmentMail from '../jobs/EnrollmentMail';
+import Queue from '../../lib/Queue';
+
 class EnrollmentController {
   async index(req, res) {
     const { page = 1 } = req.query;
@@ -68,9 +71,9 @@ class EnrollmentController {
      */
     const { student_id, plan_id, start_date } = req.body;
 
-    const studentExists = await Student.findByPk(student_id);
+    const student = await Student.findByPk(student_id);
 
-    if (!studentExists) {
+    if (!student) {
       return res.status(400).json({ error: 'Student does not exists' });
     }
 
@@ -113,9 +116,13 @@ class EnrollmentController {
       price,
     });
 
-    /**
-     * ENVIAR EMAIL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-     */
+    await Queue.add(EnrollmentMail.key, {
+      student,
+      start_date,
+      end_date: endDate,
+      plan,
+      price,
+    });
 
     return res.json({
       id,
