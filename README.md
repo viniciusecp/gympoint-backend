@@ -1,116 +1,41 @@
 <h1 align="center">
-  <img alt="Gympoint" title="Gympoint" src="https://raw.githubusercontent.com/Rocketseat/bootcamp-gostack-desafio-02/master/.github/logo.png" width="200px" />
+  <img alt="Gympoint" title="Gympoint" src=".github/logo.png" width="300px" />
+  <br />
+  <br />
+  Bootcamp GoStack Gympoint
 </h1>
 
-<h3 align="center">
-  Desafio 2: Gympoint, o início
-</h3>
+<h4 align="center">
+  An API to serve a gym management app that allows the instructor to manage student enrollments, plans, check-ins, and requests for help.
+</h4>
 
-<blockquote align="center">“Não espere para plantar, apenas tenha paciência para colher”!</blockquote>
+## :rocket: Technologies
 
-<p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/rocketseat/bootcamp-gostack-desafio-02?color=%2304D361">
+This project was developed at the [RocketSeat GoStack Bootcamp](https://rocketseat.com.br/bootcamp) with the following technologies:
 
-  <a href="https://rocketseat.com.br">
-    <img alt="Made by Rocketseat" src="https://img.shields.io/badge/made%20by-Rocketseat-%2304D361">
-  </a>
+- [NodeJS](https://nodejs.org)
+- Code Standardization
+- [MVC](https://nodejs.org)
+- [Docker](https://www.docker.com)
+- [Sequelize](https://sequelize.org)
+- [JWT](https://jwt.io/)
+- [YUP](https://www.npmjs.com/package/yup)
+- [Bee Queue](https://bee-queue.com/)
+- [Redis](https://redis.io)
+- [Nodemailer](https://nodemailer.com)
+- [dotenv](https://www.npmjs.com/package/dotenv)
+- [date-fns](https://date-fns.org/)
+- [Nodemon](https://nodemon.io/)
+- [Sucrase](https://sucrase.io/)
+- [ESlint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [EditorConfig](https://editorconfig.org/)
+- And another bunch of packages....
 
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-%2304D361">
+## :memo: License
 
-  <a href="https://github.com/Rocketseat/bootcamp-gostack-desafio-02/stargazers">
-    <img alt="Stargazers" src="https://img.shields.io/github/stars/rocketseat/bootcamp-gostack-desafio-02?style=social">
-  </a>
-</p>
-
-<p align="center">
-  <a href="#rocket-sobre-o-desafio">Sobre o desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-entrega">Entrega</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#memo-licença">Licença</a>
-</p>
-
-## :rocket: Sobre o desafio
-
-A aplicação que iremos dar início ao desenvolvimento a partir de agora é um app gerenciador de academia, o **Gympoint**.
-
-Nesse primeiro desafio vamos criar algumas funcionalidades básicas que aprendemos ao longo das aulas até aqui. Esse projeto será desenvolvido aos poucos até o fim da sua jornada onde você terá uma aplicação completa envolvendo back-end, front-end e mobile, que será utilizada para a **certificação do bootcamp**, então, bora pro código!
-
-### Um pouco sobre as ferramentas
-
-Você deverá criar a aplicação do zero utilizando o [Express](https://expressjs.com/), além de precisar configurar as seguintes ferramentas:
-
-- Sucrase + Nodemon;
-- ESLint + Prettier + EditorConfig;
-- Sequelize (Utilize PostgreSQL ou MySQL);
-
-### Funcionalidades
-
-Abaixo estão descritas as funcionalidades que você deve adicionar em sua aplicação.
-
-#### 1. Autenticação
-
-Permita que um usuário se autentique em sua aplicação utilizando e-mail e uma senha.
-
-Crie um usuário administrador utilizando a funcionalidade de [seeds do sequelize](https://sequelize.org/master/manual/migrations.html#creating-first-seed), essa funcionalidade serve para criarmos registros na base de dados de forma automatizada.
-
-Para criar um seed utilize o comando:
-
-```js
-yarn sequelize seed:generate --name admin-user
-```
-
-No arquivo gerado na pasta `src/database/seeds` adicione o código referente à criação de um usuário administrador:
-
-```js
-const bcrypt = require('bcryptjs');
-
-module.exports = {
-  up: QueryInterface => {
-    return QueryInterface.bulkInsert(
-      'users',
-      [
-        {
-          name: 'Administrador',
-          email: 'admin@gympoint.com',
-          password_hash: bcrypt.hashSync('123456', 8),
-          created_at: new Date(),
-          updated_at: new Date(),
-        },
-      ],
-      {}
-    );
-  },
-
-  down: () => {},
-};
-```
-
-Agora execute:
-
-```js
-yarn sequelize db:seed:all
-```
-
-Agora você tem um usuário na sua base de dados, utilize esse usuário para todos logins daqui pra frente.
-
-- A autenticação deve ser feita utilizando JWT.
-- Realize a validação dos dados de entrada;
-
-#### 2. Cadastro de alunos
-
-Permita que alunos sejam mantidos (cadastrados/atualizados) na aplicação utilizando nome, email, idade, peso e altura.
-
-Utilize uma nova tabela no banco de dados chamada `students`.
-
-O cadastro de alunos só pode ser feito por usuários autenticados na aplicação.
-
-## 📅 Entrega
-
-Esse desafio **não precisa ser entregue** e não receberá correção. Além disso, o código fonte **não está disponível** por fazer parte do **desafio final**, que será corrigido para **certificação** do bootcamp. Após concluir o desafio, adicionar esse código ao seu Github é uma boa forma de demonstrar seus conhecimentos para oportunidades futuras.
-
-## :memo: Licença
-
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
+This project is under the MIT license. See the [LICENSE](https://github.com/viniciusecp/gympoint-backend/blob/master/LICENSE.md) for more information.
 
 ---
 
-Feito com ♥ by Rocketseat :wave: [Entre na nossa comunidade!](https://discordapp.com/invite/gCRAFhc)
+Feito com ♥ by Vinicius Faustino Silva :wave: [Get in touch!](https://www.linkedin.com/in/vinícius-silva-019aa0165)
