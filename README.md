@@ -9,6 +9,11 @@
   An API to serve a gym management app that allows the instructor to manage student enrollments, plans, check-ins, and requests for help.
 </h4>
 
+<p align="center">
+  <a href="#rocket-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#memo-license">License</a>
+</p>
+
 ## :rocket: Technologies
 
 This project was developed at the [RocketSeat GoStack Bootcamp](https://rocketseat.com.br/bootcamp) with the following technologies:
