@@ -1,10 +1,19 @@
-<strong>Olá, {{ name }}!</strong>
+<p>Olá, <strong>{{ name }}</strong>!</p>
+
 <p>Sua matrícula foi efetuada com sucesso! Agora você também faz parte da família Gympoint!</p>
+
 <p>Confira abaixo os dados da sua matrícula:</p>
-<p>
-  <strong>Data de início: </strong> {{ start_date }} <br />
-  <strong>Data de térmno: </strong> {{ end_date }} <br />
-  <strong>Plano: </strong> {{ plan }} <br />
-  <strong>Investimento: </strong> {{ price }} <br />
-</p>
+
+<div style="
+  padding: 0 10px;
+  border-left-width: 8px;
+  border-left-style: solid;
+  border-left-color: #e57878;
+  ">
+  <strong>Data de início: </strong> {{ start_date }}. <br />
+  <strong>Data de térmno: </strong> {{ end_date }}. <br />
+  <strong>Plano: </strong> {{ plan }}. <br />
+  <strong>Investimento: </strong> {{ price }}. <br />
+</div>
+
 <p>Já estamos te esperando!!!</p>

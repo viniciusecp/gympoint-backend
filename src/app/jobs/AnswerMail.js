@@ -2,9 +2,9 @@ import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Mail from '../../lib/Mail';
 
-class AnswerHelpOrderMail {
+class AnswerMail {
   get key() {
-    return 'AnswerHelpOrderMail';
+    return 'AnswerMail';
   }
 
   async handle({ data }) {
@@ -13,7 +13,7 @@ class AnswerHelpOrderMail {
     await Mail.sendMail({
       to: `${helpOrder.student.name} <${helpOrder.student.email}>`,
       subject: 'Pedido de auxílio atendido',
-      template: 'answerHelpOrder',
+      template: 'answer',
       context: {
         name: helpOrder.student.name,
         question: helpOrder.question,
@@ -30,4 +30,4 @@ class AnswerHelpOrderMail {
   }
 }
 
-export default new AnswerHelpOrderMail();
+export default new AnswerMail();

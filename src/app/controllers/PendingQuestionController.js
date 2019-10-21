@@ -3,10 +3,23 @@ import * as Yup from 'yup';
 import HelpOrder from '../models/HelpOrder';
 import Student from '../models/Student';
 
-import AnswerHelpOrderMail from '../jobs/AnswerHelpOrderMail';
+import AnswerMail from '../jobs/AnswerMail';
 import Queue from '../../lib/Queue';
 
-class AnswerHelpOrders {
+class PendingQuestionController {
+  async index(req, res) {
+    const { page = 1 } = req.query;
+
+    const helpOrders = await HelpOrder.findAll({
+      where: { answer: null },
+      attributes: ['id', 'question', 'answer', 'answer_at'],
+      limit: 20,
+      offset: (page - 1) * 20,
+    });
+
+    return res.json(helpOrders);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       answer: Yup.string().required(),
@@ -43,7 +56,7 @@ class AnswerHelpOrders {
       answer_at: new Date(),
     });
 
-    await Queue.add(AnswerHelpOrderMail.key, {
+    await Queue.add(AnswerMail.key, {
       helpOrder,
       answer,
       answer_at,
@@ -53,4 +66,4 @@ class AnswerHelpOrders {
   }
 }
 
-export default new AnswerHelpOrders();
+export default new PendingQuestionController();
