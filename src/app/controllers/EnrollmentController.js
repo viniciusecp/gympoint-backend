@@ -22,6 +22,7 @@ class EnrollmentController {
         'student_id',
         'plan_id',
         'canceled_at',
+        'active',
       ],
       include: [
         {

@@ -45,7 +45,7 @@ This project was developed at the [RocketSeat GoStack Bootcamp](https://rocketse
 
 ## :memo: License
 
-This project is under the MIT license. See the [LICENSE](https://github.com/viniciusecp/gympoint-backend/blob/master/LICENSE.md) for more information.
+This project is under the MIT license. See the [LICENSE](LICENSE.md) for more information.
 
 ---
 
