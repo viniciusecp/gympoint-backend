@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import { Op } from 'sequelize';
 
 import Student from '../models/Student';
+import Enrollment from '../models/Enrollment';
 
 class StudentController {
   async index(req, res) {
@@ -108,6 +109,30 @@ class StudentController {
       weight,
       user_id,
     });
+  }
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    const student = await Student.findByPk(id);
+
+    if (!student) {
+      return res.status(400).json({ error: 'Student does not exists' });
+    }
+
+    const studentInActiveEnrollment = await Enrollment.findOne({
+      where: { student_id: id, canceled_at: null },
+    });
+
+    if (studentInActiveEnrollment) {
+      return res
+        .status(400)
+        .json({ error: 'This student has active enrollment' });
+    }
+
+    await student.destroy();
+
+    return res.json();
   }
 }
 
